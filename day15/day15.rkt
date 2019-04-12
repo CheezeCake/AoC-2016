@@ -5,9 +5,8 @@
 (define (solve discs)
   (define (solve time)
     (if (for/and ([disc discs])
-          (= (remainder (+ (disc-position-at-zero disc) time (disc-number disc))
-                        (disc-positions disc))
-              0))
+          (zero? (remainder (+ (disc-position-at-zero disc) time (disc-number disc))
+                            (disc-positions disc))))
         time
         (solve (add1 time))))
   (solve 0))
