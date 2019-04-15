@@ -21,13 +21,12 @@
   (define (find-path pos path)
     (if (done? pos)
         (cons (string-length path) path)
-        (let ([md5-hash (md5 (open-input-string (string-append input path)))])
-          (for/fold ([best-path (cons init-length "")])
-                    ([p (for/list ([d directions]
-                                   [c md5-hash]
-                                   #:when (and (open? c) (within-bounds? (next-pos pos (cdr d)))))
-                          (find-path (next-pos pos (cdr d)) (string-append path (car d))))])
-                    (if (cmp (car p) (car best-path)) p best-path)))))
+        (for/fold ([best-path (cons init-length "")])
+                  ([p (for/list ([d directions]
+                                 [c (md5 (open-input-string (string-append input path)))]
+                                 #:when (and (open? c) (within-bounds? (next-pos pos (cdr d)))))
+                        (find-path (next-pos pos (cdr d)) (string-append path (car d))))])
+                  (if (cmp (car p) (car best-path)) p best-path))))
   (find-path (cons 0 0) ""))
 
 (let ([input (command-line #:args (input) input)])
