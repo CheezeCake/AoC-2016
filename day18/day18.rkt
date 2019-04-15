@@ -13,13 +13,13 @@
   (define (safe-cnt row) (count safe? row))
   (define (safe-tiles prev-row cur-row)
     (if (> cur-row n)
-        0
+        (safe-cnt prev-row)
         (let ([row (for/list ([left (append (list #\.) prev-row)]
                               [center prev-row]
                               [right (append (drop prev-row 1) '(#\.))])
                      (if (trap? left center right) #\^ #\.))])
           (+ (safe-cnt prev-row) (safe-tiles row (add1 cur-row))))))
-  (safe-tiles first-row 1))
+  (safe-tiles first-row 2))
 
 (let ([first-row (string->list (read-line))])
   (printf "part 1: ~a\n" (safe-tiles first-row 40))
