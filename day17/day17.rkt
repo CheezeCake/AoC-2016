@@ -7,7 +7,7 @@
                          (cons "L" (cons -1 0))
                          (cons "R" (cons 1 0))))
 
-(define (done? pos) (and (= (car pos) 3) (= (cdr pos) 3)))
+(define (done? pos) (= (car pos) (cdr pos) 3))
 
 (define (within-bounds? pos)
   (define (valid? x) (and (>= x 0) (< x 4)))
